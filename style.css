@@ -1,0 +1,128 @@
+/* Focbit website, in the app's Pixel Neon style. No outside requests:
+   the pixel font and the art are in this folder. */
+@font-face {
+  font-family: "Press Start 2P";
+  src: url("fonts/PressStart2P.ttf") format("truetype");
+  font-display: swap;
+}
+:root {
+  --bg: #10131a; --surface: #20262f; --raised: #292f3a; --lime: #c7f464; --lime-shade: #8db33a;
+  --violet: #a78bfa; --text: #f5f7f2; --dim: #a1a8b5; --border: #3b4350; --overlay: #080a0f; --error: #ff7a6b;
+  --u: 4px; /* one "pixel" of the boxes */
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* faint pixel grid, like the app's backdrops */
+  background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+img { image-rendering: pixelated; image-rendering: crisp-edges; max-width: 100%; }
+a { color: var(--lime); text-underline-offset: 3px; }
+a:focus-visible, summary:focus-visible { outline: 3px solid var(--violet); outline-offset: 4px; }
+.pixel, h1, h2, h3, .button, nav, summary .q-tag { font-family: "Press Start 2P", ui-monospace, monospace; font-weight: 400; letter-spacing: 0; }
+
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+@media (min-width: 414px) { .wrap { padding: 0 20px; } }
+
+/* ---- header ---- */
+header.top { position: sticky; top: 0; z-index: 10; background: rgba(16,19,26,.94); backdrop-filter: blur(6px); border-bottom: var(--u) solid var(--overlay); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-family: "Press Start 2P", monospace; font-size: 16px; }
+.brand b { color: var(--lime); font-weight: 400; }
+.brand .dot { width: 16px; height: 16px; background: var(--lime); box-shadow: inset 0 -4px var(--lime-shade); }
+nav { display: flex; gap: 4px; font-size: 10px; }
+nav a { color: var(--dim); text-decoration: none; padding: 16px 10px; min-height: 44px; display: inline-flex; align-items: center; }
+nav a[aria-current="page"] { color: var(--lime); }
+@media (min-width: 600px) { nav { font-size: 11px; gap: 12px; } }
+
+/* ---- pixel boxes: notched corners, like PixelBox in the app ---- */
+.px {
+  position: relative; background: var(--surface); margin: var(--u);
+  box-shadow: 0 calc(-1 * var(--u)) 0 0 var(--b, var(--border)), 0 var(--u) 0 0 var(--b, var(--border)),
+              calc(-1 * var(--u)) 0 0 0 var(--b, var(--border)), var(--u) 0 0 0 var(--b, var(--border)),
+              inset 0 calc(-1 * var(--u)) 0 0 var(--shade, transparent);
+  padding: 18px 20px;
+}
+.px.lime { --b: var(--lime); }
+.px.violet { --b: var(--violet); }
+.px > :first-child { margin-top: 0; } .px > :last-child { margin-bottom: 0; }
+
+.button {
+  --b: var(--overlay); --shade: var(--lime-shade);
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 50px;
+  background: var(--lime); color: var(--bg); text-decoration: none; font-size: 13px; padding: 16px 22px 20px;
+  transition: transform .06s;
+}
+.button:active { transform: translateY(var(--u)); --shade: transparent; }
+.button .arrow { width: 0; height: 0; border: 7px solid transparent; border-left: 8px solid currentColor; border-right: 0; }
+.chip { display: inline-block; font-family: "Press Start 2P", monospace; font-size: 10px; line-height: 1; color: var(--bg); background: var(--violet); padding: 8px 10px; }
+
+/* ---- type ---- */
+h1 { font-size: 28px; line-height: 1.3; margin: 0; text-shadow: 4px 4px 0 var(--overlay); }
+h2 { font-size: 15px; line-height: 1.5; color: var(--violet); margin: 48px 0 16px; }
+h3 { font-size: 12px; line-height: 1.6; margin: 0 0 10px; }
+.lead { color: var(--dim); font-size: 18px; }
+.updated { color: var(--dim); font-size: 14px; margin: 12px 0 28px; }
+p, li { color: var(--text); }
+.dim { color: var(--dim); }
+ul { padding-left: 22px; } li { margin: 8px 0; }
+ul.marks { list-style: none; padding: 0; }
+ul.marks li { position: relative; padding-left: 30px; }
+ul.marks li::before { content: ""; position: absolute; left: 4px; top: 8px; width: 10px; height: 10px; background: var(--lime); box-shadow: 0 2px var(--lime-shade); }
+ul.marks.no li::before { background: var(--error); box-shadow: none; }
+@media (min-width: 768px) { h1 { font-size: 40px; } h2 { font-size: 18px; } }
+
+/* ---- page frame ---- */
+main { padding: 40px 0 72px; }
+.doc { max-width: 720px; margin: 0 auto; }
+footer { border-top: var(--u) solid var(--overlay); background: var(--surface); padding: 28px 0 40px; color: var(--dim); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; }
+footer a { color: var(--dim); }
+
+/* ---- home ---- */
+.hero { text-align: center; padding: 24px 0 8px; }
+.hero .sub { font-family: "Press Start 2P", monospace; font-size: 12px; color: var(--lime); margin: 16px 0 0; }
+.hero .lead { max-width: 560px; margin: 20px auto 28px; }
+.cast { display: flex; justify-content: center; align-items: flex-end; gap: 4px; margin: 32px auto 0; max-width: 100%; overflow: hidden; }
+.sprite { --w: 102px; --h: 196px; width: var(--w); height: var(--h); flex: 0 0 auto;
+  background-size: calc(var(--w) * 10) var(--h); background-repeat: no-repeat; image-rendering: pixelated;
+  animation: wave 1.5s steps(10) infinite; }
+.sprite:nth-child(2) { animation-delay: -.5s; } .sprite:nth-child(3) { animation-delay: -1s; }
+.sprite:nth-child(4) { animation-delay: -.3s; } .sprite:nth-child(5) { animation-delay: -.8s; }
+.sprite.hide-s { display: none; }
+@keyframes wave { to { background-position: calc(var(--w) * -10) 0; } }
+@media (min-width: 600px) { .sprite { --w: 122px; --h: 235px; } .sprite.hide-s { display: block; } }
+@media (prefers-reduced-motion: reduce) { .sprite, .icon { animation: none !important; } }
+.stage { --b: var(--lime); background: linear-gradient(#1a2030, var(--surface)); padding: 0 12px; }
+.floor { height: 24px; background: repeating-linear-gradient(90deg, #2a3140 0 24px, #252b38 24px 48px); margin: 0 -12px; }
+
+.features { display: grid; gap: 16px; margin-top: 8px; }
+@media (min-width: 768px) { .features { grid-template-columns: repeat(3, 1fr); } }
+.icon { width: 48px; height: 48px; background-size: 192px 48px; image-rendering: pixelated; animation: icon 1s steps(4) infinite; margin-bottom: 14px; }
+@keyframes icon { to { background-position: -192px 0; } }
+.features p { color: var(--dim); font-size: 16px; margin: 0; }
+.lineup { display: block; margin: 0 auto; width: 100%; max-width: 680px; }
+.cta { text-align: center; }
+.cta .row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 20px; }
+
+/* ---- support / privacy ---- */
+.tldr { --b: var(--lime); }
+details.px { padding: 0 20px; margin: 16px var(--u); }
+details.px[open] { --b: var(--lime); }
+summary { cursor: pointer; list-style: none; padding: 16px 32px 16px 0; min-height: 44px; font-weight: 600; position: relative; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: ""; position: absolute; right: 2px; top: 50%; margin-top: -4px; border: 7px solid transparent; border-top: 8px solid var(--dim); border-bottom: 0; }
+details[open] summary::after { border-top-color: var(--lime); transform: rotate(180deg); }
+details p { margin: 0 0 18px; }
+.contact { display: grid; gap: 20px; align-items: center; }
+@media (min-width: 600px) { .contact { grid-template-columns: auto 1fr; } }
+.sad { --w: 102px; --h: 196px; width: var(--w); height: var(--h); background: url(img/trader-f-sad.png) 0 0 / calc(var(--w) * 4) var(--h) no-repeat; animation: sad 3.2s steps(1) infinite; margin: 0 auto; }
+@keyframes sad { 0%,40% { background-position: 0 0 } 45%,55% { background-position: calc(var(--w) * -1) 0 } 60%,72% { background-position: calc(var(--w) * -2) 0 } 76%,92% { background-position: calc(var(--w) * -3) 0 } 96% { background-position: 0 0 } }
+.email { font-family: "Press Start 2P", monospace; font-size: 11px; line-height: 1.8; word-break: break-all; }
+
+/* small phones: the brand already links home, so the nav drops Home */
+@media (max-width: 479px) { nav .home-link { display: none; } nav a { padding: 16px 8px; } }
+.lineup { height: auto; }
